@@ -80,42 +80,72 @@ def seleccionar_productos(login):
 
 # Función para mostrar la lista de compras del cliente.
 def mostrar_lista_compra(login):
-    print("Esta es tu lista de la compra: ")
+    print(f"Esta es tu lista de la compra y tu numero de pedido: ")
+    print(f"Numero de pedido : {registrocliente[login]['numeropedido']}")
     for producto in registrocliente[login]["listacompra"]:
         print(f"- {producto}")
 
 # Función para mostrar la información de la compra
 def mostrar_informacion_compra(login):
     datos = registrocliente[login]
-    print("\n--- Información de la Compra ---")
-    print(f"Cliente: {login}")
-    print(f"DNI: {datos['dni']}")
-    print(f"Número de Pedido: {datos['numeropedido']}")
-    print("Productos Comprados:")
-    for producto in datos["listacompra"]:
-        print(f"- {producto}")
-    print("-------------------------------\n")
+    numero_pedido_input = input("Ingrese su número de pedido para ver la información de la compra: ")
+    
+    # Verificamos si el número de pedido ingresado coincide con el número de pedido del cliente
+    if numero_pedido_input == str(datos['numeropedido']):
+        print("\n--- Información de la Compra ---")
+        print(f"Cliente: {login}")
+        print(f"DNI: {datos['dni']}")
+        print(f"Número de Pedido: {datos['numeropedido']}")
+        print("Productos Comprados:")
+        for producto in datos["listacompra"]:
+            print(f"- {producto}")
+        print("-------------------------------\n")
+    else:
+        print("Número de pedido incorrecto. No se puede mostrar la información de la compra.")
 
-# Función para mostrar todos los clientes registrados.
+
+# Función para mostrar todos los clientes registrados y permitir seleccionar uno por DNI
 def mostrar_clientes_registrados():
-    respuesta= input("Te gustaria ver los clientes registrados? (si/no): ")
-    if respuesta  == "si":
+    respuesta = input("Te gustaría ver los clientes registrados? (si/no): ")
+    if respuesta == "si":
         print("\n--- Clientes Registrados ---")
+
+        # Itera sobre el diccionario de clientes para mostrar la información de cada uno
         for cliente in registrocliente:
             print(f"Cliente: {cliente}, DNI: {registrocliente[cliente]['dni']}, Número de Pedido: {registrocliente[cliente]['numeropedido']}")
             print("-------------------------------\n")
 
-            
-    else:
-        print("Hasta la próxima, gracias por comprar con nosotros")
-        exit()
+        # Solicitar al usuario que ingrese el DNI de un cliente
+        dni_seleccionado = input("Ingrese el DNI del cliente para ver su carrito de la compra: ")
 
-# Función principal que ejecuta todo el programa.
+        # Buscar el cliente por DNI
+        for cliente in registrocliente:
+            if registrocliente[cliente]['dni'] == dni_seleccionado:
+
+                # Guarda el nombre del cliente si el DNI coincide
+                cliente_encontrado = cliente
+                break
+        
+        #Si se encuentra el cliente, muestra su información de la compra
+        if cliente_encontrado:
+            print(f"Carrito del cliente: {cliente_encontrado}, DNI: {registrocliente[cliente_encontrado]['dni']}, , Carrito : {registrocliente[cliente_encontrado]['listacompra']}")
+        else:
+            print("No se encontró un cliente con ese DNI.")
+
+
+# Función para ejecutar todo el programa
 def main():
-    login = iniciar_sesion()
-    mostrar_productos()
-    seleccionar_productos(login)
-    mostrar_informacion_compra(login)  
-    mostrar_clientes_registrados()
-main()
+    cliente_actual = iniciar_sesion()
+    while True:
+        mostrar_productos()
+        seleccionar_productos(cliente_actual)
+        mostrar_lista_compra(cliente_actual)
+        mostrar_informacion_compra(cliente_actual)
+        mostrar_clientes_registrados()
+        
+        continuar = input("¿Desea realizar otra acción? (si/no): ")
+        if continuar.lower() != "si":
+            print("Gracias por su visita. ¡Hasta luego!")
+            break
 
+main()
