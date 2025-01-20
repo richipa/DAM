@@ -1,0 +1,56 @@
+INICIO
+
+opcion = ""
+opciones_validas = [1 y 2]
+lado = 0
+area = 0
+perimetro = 0
+base = 0
+altura = 0
+
+imprime "MENU"
+imprime "1- Cuadrado"
+imprime "2- Rectángulo"
+
+while true:
+
+   leer opcion = int (input"Dime una opcion:")
+
+    si opcion == 1 entonces
+
+       leer lado = int (input"Dime el lado:")
+
+       imprimir "**"
+       imprimir "**"
+
+       leer area = lado * lado 
+
+       imprimir "Area es {area}"
+
+       leer perimetro = lado * 4
+
+       imprimir "Perimetro es {perimetro}
+       
+
+    si no si opcion == 2 entonces
+
+        leer base = int (input"Dame base)
+
+        leer altura = int (input"Dame altura)
+
+        imprimir "***"
+        imprimir "***"
+
+        leer area = base * altura
+
+        imprimir "Area es {area}"
+
+        leer perimetro = base * 2 + altura * 2
+
+        imprimir "Perimetro es {perimetro}
+        
+
+    sino
+
+        imprimir "ERROR, elije otra opcion"
+
