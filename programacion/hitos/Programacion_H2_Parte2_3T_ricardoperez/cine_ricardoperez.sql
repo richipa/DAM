@@ -16,6 +16,7 @@ id_sala VARCHAR(5),
 FOREIGN KEY (id_sala) REFERENCES salas(id_sala)
 );
 
+// En mi caso no he tenido que utilizar la tabla salas excepto para el ID, que se relaciona con peliculas. Pero para nada mas.
 INSERT INTO salas (id_sala, nombre_sala) VALUES
 ('S1', 'Sala Principal'),
 ('S2', 'Sala 3D'),
